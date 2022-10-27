@@ -3,12 +3,14 @@
     exception LexingError
 }
 
+let whitespace = [' ' '\t']
 let backspace = ['b' 'B']['a' 'A']['c' 'C']['k' 'K']['s' 'S']['p' 'P']['a' 'A']['c' 'C']['e' 'E']
 let insert = ['i' 'I']['n' 'N']['s' 'S']['e' 'E']['r' 'R']['t' 'T']
 let down = ['v' 'V']
 
 rule read =
     parse
+        | whitespace { read lexbuf }
         | "^" { UP }
         | down { DOWN }
         | "<" { LEFT }
