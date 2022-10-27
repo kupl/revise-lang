@@ -53,26 +53,30 @@ module Source = struct
     front, rear
 
 
+  let trim_row_loc (source : t) (row : int) : int = row |> max 1 |> min (List.length source.source)
 
-  (* let front = String.concat "\n" @@ let lines = String.split_on_char '\n' source.source in let
-     front = List.filteri (fun i _ -> i < source.cursor.row - 1) lines in let front = String.concat
-     "\n" front in let front = front ^ "\n" ^ String.sub (get_current_row source) in let back =
-     List.filteri (fun i _ -> i > source.cursor.row - 1) lines in let back = String.concat "\n" back
-     in front, back *)
+  let trim_col_loc (source : t) (col : int) : int =
+    col |> max 1 |> min (get_current_row source |> List.length)
 
-  (* let current_row (source : t) : string = source.source *)
-  let move_up (source : t) : t = source
+
+  let trim_loc (source : t) (loc : loc) : loc =
+    { row = trim_row_loc source loc.row; col = trim_col_loc source loc.col }
+
+
+  let move_up (source : t) : t =
+    { source with cursor = { source.cursor with row = source.cursor.row - 1 } |> trim_loc source }
+
 
   let move_down (source : t) : t =
-    { source with cursor = { source.cursor with row = source.cursor.row + 1 } }
+    { source with cursor = { source.cursor with row = source.cursor.row + 1 } |> trim_loc source }
 
 
   let move_left (source : t) : t =
-    { source with cursor = { source.cursor with col = max (source.cursor.col - 1) 1 } }
+    { source with cursor = { source.cursor with col = source.cursor.col - 1 } |> trim_loc source }
 
 
   let move_right (source : t) : t =
-    { source with cursor = { source.cursor with col = max (source.cursor.col + 1) 1 } }
+    { source with cursor = { source.cursor with col = source.cursor.col + 1 } |> trim_loc source }
 
 
   let delete (source : t) : t = source
