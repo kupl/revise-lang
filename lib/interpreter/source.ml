@@ -37,7 +37,21 @@ module Source = struct
         |> List.to_seq
         |> String.of_seq)
     in
-    front, front
+    let rear =
+      Core.List.drop (get_current_row source) (source.cursor.col - 1)
+      |> List.to_seq
+      |> String.of_seq
+    in
+    let rear =
+      rear
+      ^ "\n"
+      ^ (Core.List.drop source.source source.cursor.row
+        |> List.map List.to_seq
+        |> List.map String.of_seq
+        |> String.concat "\n")
+    in
+    front, rear
+
 
 
   (* let front = String.concat "\n" @@ let lines = String.split_on_char '\n' source.source in let
@@ -70,6 +84,10 @@ module Source = struct
 
   let pp (formatter : Format.formatter) (source : t) : unit =
     let front, back = split source in
+    let current_char = String.get back 0 in
+    let back = String.sub back 1 (String.length back - 1) in
     Format.fprintf formatter "%s" front;
+    if current_char = '\n' then Format.fprintf formatter "\027[30;47m \027[m\n"
+    else Format.fprintf formatter "\027[30;47m%c\027[m\n" current_char;
     Format.fprintf formatter "%s" back
 end
