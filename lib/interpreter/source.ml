@@ -84,10 +84,17 @@ module Source = struct
         let rear_rows = Core.List.drop source.source (row + 1) in
         { source = front_rows @ [current_row] @ rear_rows; cursor = { row; col = col - 1 } }
 
-  let insert (source : t) (str : string) : t =
-    let _ = str in
-    source
-
+  let insert (str : string) (source : t) : t =
+    let str = str |> String.to_seq |> List.of_seq in
+    let { row; col } = source.cursor in
+    let front_rows = Core.List.take source.source row in
+    let current_row = List.nth source.source row in
+    let current_row = Core.List.take current_row col @ str @ Core.List.drop current_row col in
+    let rear_rows = Core.List.drop source.source (row + 1) in
+    {
+      source = front_rows @ [current_row] @ rear_rows;
+      cursor = { row; col = col + List.length str };
+    }
 
   let pp (formatter : Format.formatter) (source : t) : unit =
     let front, back = split source in

@@ -15,6 +15,6 @@ module Source : sig
   val move_left : t -> t
   val move_right : t -> t
   val delete : t -> t
-  val insert : t -> string -> t
+  val insert : string -> t -> t
   val pp : Format.formatter -> t -> unit
 end
