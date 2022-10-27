@@ -64,8 +64,25 @@ module Source = struct
   let move_right (source : t) : t =
     { source with cursor = { source.cursor with col = source.cursor.col + 1 } |> trim_loc source }
 
-
-  let delete (source : t) : t = source
+  let delete (source : t) : t =
+    match source.cursor with
+    | { row = 0; col = 0 } -> source
+    | { row; col = 0 } ->
+        let front_rows = Core.List.take source.source (row - 1) in
+        let prev_row = List.nth source.source (row - 1) in
+        let current_row = List.nth source.source row in
+        let current_row = prev_row @ current_row in
+        let rear_rows = Core.List.drop source.source (row + 1) in
+        {
+          source = front_rows @ [current_row] @ rear_rows;
+          cursor = { row = row - 1; col = List.length prev_row };
+        }
+    | { row; col } ->
+        let front_rows = Core.List.take source.source row in
+        let current_row = List.nth source.source row in
+        let current_row = Core.List.take current_row (col - 1) @ Core.List.drop current_row col in
+        let rear_rows = Core.List.drop source.source (row + 1) in
+        { source = front_rows @ [current_row] @ rear_rows; cursor = { row; col = col - 1 } }
 
   let insert (source : t) (str : string) : t =
     let _ = str in
