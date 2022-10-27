@@ -10,70 +10,56 @@ module Source = struct
   }
 
   let from_string (source : string) : t =
-    let col = 1 in
-    let row = 1 in
+    let col = 0 in
+    let row = 0 in
     let cursor = { col; row } in
     let source = String.split_on_char '\n' source in
     let source = List.map (fun line -> String.to_seq line |> List.of_seq) source in
     { source; cursor }
 
-
-  (* let get_number_of_rows (source : t) : int = let rows = String.split_on_char '\n' source.source
-     in List.length rows *)
-
-  let get_current_row (source : t) : char list = List.nth source.source (source.cursor.row - 1)
+  let get_current_row (source : t) : char list = List.nth source.source source.cursor.row
 
   let split (source : t) : string * string =
     let front =
-      Core.List.take source.source (source.cursor.row - 1)
+      Core.List.take source.source source.cursor.row
       |> List.map List.to_seq
       |> List.map String.of_seq
       |> String.concat "\n"
     in
     let front =
       front
-      ^ "\n"
-      ^ (Core.List.take (get_current_row source) (source.cursor.col - 1)
-        |> List.to_seq
-        |> String.of_seq)
+      ^ (if String.length front > 0 then "\n" else "")
+      ^ (Core.List.take (get_current_row source) source.cursor.col |> List.to_seq |> String.of_seq)
     in
     let rear =
-      Core.List.drop (get_current_row source) (source.cursor.col - 1)
-      |> List.to_seq
-      |> String.of_seq
+      Core.List.drop (get_current_row source) source.cursor.col |> List.to_seq |> String.of_seq
     in
     let rear =
       rear
       ^ "\n"
-      ^ (Core.List.drop source.source source.cursor.row
+      ^ (Core.List.drop source.source (source.cursor.row + 1)
         |> List.map List.to_seq
         |> List.map String.of_seq
         |> String.concat "\n")
     in
     front, rear
 
-
-  let trim_row_loc (source : t) (row : int) : int = row |> max 1 |> min (List.length source.source)
+  let trim_row_loc (source : t) (row : int) : int = row |> max 0 |> min (List.length source.source)
 
   let trim_col_loc (source : t) (col : int) : int =
-    col |> max 1 |> min (get_current_row source |> List.length)
-
+    col |> max 0 |> min (List.length (get_current_row source))
 
   let trim_loc (source : t) (loc : loc) : loc =
     { row = trim_row_loc source loc.row; col = trim_col_loc source loc.col }
 
-
   let move_up (source : t) : t =
     { source with cursor = { source.cursor with row = source.cursor.row - 1 } |> trim_loc source }
-
 
   let move_down (source : t) : t =
     { source with cursor = { source.cursor with row = source.cursor.row + 1 } |> trim_loc source }
 
-
   let move_left (source : t) : t =
     { source with cursor = { source.cursor with col = source.cursor.col - 1 } |> trim_loc source }
-
 
   let move_right (source : t) : t =
     { source with cursor = { source.cursor with col = source.cursor.col + 1 } |> trim_loc source }
