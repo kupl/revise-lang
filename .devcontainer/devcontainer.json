@@ -4,7 +4,7 @@
     "customizations": {
         "vscode": {
             "settings": {
-                "[ocaml]": {
+                "[ocaml][ocaml.interface]": {
                     "editor.formatOnSave": true
                 }
             },
