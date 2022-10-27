@@ -12,7 +12,7 @@ field-space=tight-decl
 if-then-else=compact
 indicate-nested-or-patterns=unsafe-no
 let-and=sparse
-let-binding-spacing=sparse
+let-binding-spacing=compact
 margin=100
 ocp-indent-compat
 parens-tuple=multi-line-only
