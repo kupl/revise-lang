@@ -1,0 +1,16 @@
+{
+    "name": "rescue-lang",
+    "image": "sambyeol/ocaml-devcontainer",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "[ocaml]": {
+                    "editor.formatOnSave": true
+                }
+            },
+            "extensions": [
+                "ocamllabs.ocaml-platform"
+            ]
+        }
+    }
+}
