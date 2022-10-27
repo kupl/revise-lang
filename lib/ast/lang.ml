@@ -8,10 +8,13 @@ module PredefinedString = struct
   let raise_UndefinedSemantics () : t = RaiseUndefinedSemantics
   let semicolon () : t = Semicolon
 
-  let pp (formatter : Format.formatter) (str : t) : unit =
+  let get_string_value (str : t) : string =
     match str with
-    | RaiseUndefinedSemantics -> Format.fprintf formatter "raise UndefinedSemantics"
-    | Semicolon -> Format.fprintf formatter ";"
+    | RaiseUndefinedSemantics -> "raise UndefinedSemantics"
+    | Semicolon -> ";"
+
+  let pp (formatter : Format.formatter) (str : t) : unit =
+    get_string_value str |> Format.fprintf formatter "%s"
 end
 
 module Command = struct

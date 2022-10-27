@@ -7,6 +7,7 @@ module PredefinedString : sig
 
   val raise_UndefinedSemantics : unit -> t
   val semicolon : unit -> t
+  val get_string_value : t -> string
   val pp : Format.formatter -> t -> unit
 end
 
