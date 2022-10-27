@@ -1,4 +1,4 @@
 (executable
  (public_name rescue)
  (name main)
- (libraries rescue rescue.ast rescue.parser rescue.interpreter))
+ (libraries rescue rescue.ast rescue.interpreter rescue.parser rescue.util))
