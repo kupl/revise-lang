@@ -4,7 +4,7 @@
     "customizations": {
         "vscode": {
             "settings": {
-                "[ocaml][ocaml.interface]": {
+                "[ocaml][ocaml.interface][ocaml.menhir][ocaml.ocamllex]": {
                     "editor.formatOnSave": true
                 }
             },
