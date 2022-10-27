@@ -1,0 +1,4 @@
+(library
+ (name interpreter)
+ (public_name rescue.interpreter)
+ (libraries core rescue.ast))
