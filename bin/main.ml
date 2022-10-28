@@ -13,7 +13,9 @@ let main () =
   in
   let usage = "Usage: rescue -target <target.ml> RESCUE" in
   let _ = Arg.parse options (fun x -> pgm := x) usage in
-  let pgm = Parser.parse !pgm in
+  let pgm =
+    (if Sys.file_exists !pgm then Util.File.read_file_from_path !pgm else !pgm) |> Parser.parse
+  in
   let target =
     (if Sys.file_exists !target then Util.File.read_file_from_path !target else !target)
     |> Source.from_string
