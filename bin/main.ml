@@ -22,6 +22,8 @@ let main () =
   in
   let processed =
     if !opt_verbose then (
+      Format.fprintf Format.std_formatter "\n\n\n\n\n\n\n\n\n\n\n\027[11F";
+      Format.pp_print_flush Format.std_formatter ();
       Format.fprintf Format.std_formatter "\0277";
       let src =
         List.fold_left
