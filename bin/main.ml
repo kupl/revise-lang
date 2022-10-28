@@ -19,16 +19,18 @@ let main () =
     |> Source.from_string
   in
   let processed =
-    if !opt_verbose then
+    if !opt_verbose then (
+      Format.fprintf Format.std_formatter "\0277";
       List.fold_left
         (fun src cmd ->
           Source.pp Format.std_formatter src;
           Format.fprintf Format.std_formatter "\n\n";
           Format.pp_print_flush Format.std_formatter ();
           Unix.sleepf 0.1;
+          Format.fprintf Format.std_formatter "\0278\027[0J";
           Interpreter.interprete [cmd] src)
         target
-        pgm
+        pgm)
     else Interpreter.interprete pgm target
   in
   Source.pp Format.std_formatter processed;
