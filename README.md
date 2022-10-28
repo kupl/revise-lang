@@ -12,7 +12,7 @@ P = C*
 C = ^ | v | < | >
   | backspace
   | insert(S)
-S = UndefinedSemantics
+S = raise UndefinedSemantics
   | ;
 ```
 * `^`, `v`, `<`, `>`: 각각 커서를 상하좌우로 이동
