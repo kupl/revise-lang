@@ -44,8 +44,9 @@ $ dune install
 
 Rescue 프로그램으로 소스코드를 수정합니다.
 ```sh
-$ rescue [-verbose] -target <수정할 파일> <Rescue 프로그램>
+$ rescue [-verbose] [-inplace] -target <수정할 파일> <Rescue 프로그램>
 ```
 * <수정할 파일>: 수정할 파일 또는 문자열
 * <Rescue 프로그램>: Rescue 프로그램 파일 또는 문자열
 * `-verbose`: 수정 과정 시각화
+* `-inplace`: 수정 사항 반영
