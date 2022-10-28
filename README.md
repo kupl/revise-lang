@@ -28,13 +28,21 @@ Rescue 언어는 수정 대상의 맨 처음음 위치(가장 윗줄의 가장 �
 * VSCode [[link]](https://code.visualstudio.com/download)
 * remote container [[link]](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
-프로그램을 빌드합니다.
+저장소를 다운 받아 VSCode로 폴더를 엽니다.
+```sh
+$ git clone https://github.com/kupl/rescue-lang.git
+$ code rescue-lang
+```
+
+VSCode의 명령창을 열어(Windows에서 `F1` 또는 `Ctrl + Shift + P`, Mac에서 `CMD + Shift + P`) `Reopen in Container`를 검색하여 선택합니다.
+
+VSCode의 터미널을 열어(``Ctrl + ` ``) 프로그램을 빌드합니다.
 ```sh
 $ opam install --yes core
 $ dune install
 ```
 
-프로그램을 수정합니다.
+Rescue 프로그램으로 소스코드를 수정합니다.
 ```sh
 $ rescue -target <수정할 파일> <Rescue 프로그램>
 ```
