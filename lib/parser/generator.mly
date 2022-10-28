@@ -9,7 +9,7 @@
 %token BACKSPACE
 %token INSERT
 
-%token RAISE_UNDEFINEDSEMANTICS
+%token UNDEFINEDSEMANTICS
 %token SEMICOLON
 
 %token EOF
@@ -34,5 +34,5 @@ command:
   | INSERT; LPAREN; str=string; RPAREN { Ast.Lang.Command.insert str }
 
 string:
-  | RAISE_UNDEFINEDSEMANTICS { Ast.Lang.PredefinedString.raise_UndefinedSemantics () }
+  UNDEFINEDSEMANTICS { Ast.Lang.PredefinedString.undefinedSemantics () }
   | SEMICOLON { Ast.Lang.PredefinedString.semicolon () }

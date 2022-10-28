@@ -1,16 +1,16 @@
 module PredefinedString = struct
   type t =
-    (* raise UndefinedSemantics*)
-    | RaiseUndefinedSemantics
+    (* UndefinedSemantics*)
+    | UndefinedSemantics
     (* ; *)
     | Semicolon
 
-  let raise_UndefinedSemantics () : t = RaiseUndefinedSemantics
+  let undefinedSemantics () : t = UndefinedSemantics
   let semicolon () : t = Semicolon
 
   let get_string_value (str : t) : string =
     match str with
-    | RaiseUndefinedSemantics -> "raise UndefinedSemantics"
+    | UndefinedSemantics -> "UndefinedSemantics"
     | Semicolon -> ";"
 
   let pp (formatter : Format.formatter) (str : t) : unit =

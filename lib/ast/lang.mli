@@ -1,11 +1,11 @@
 module PredefinedString : sig
   type t =
-    (* raise UndefinedSemantics*)
-    | RaiseUndefinedSemantics
+    (* UndefinedSemantics*)
+    | UndefinedSemantics
     (* ; *)
     | Semicolon
 
-  val raise_UndefinedSemantics : unit -> t
+  val undefinedSemantics : unit -> t
   val semicolon : unit -> t
   val get_string_value : t -> string
   val pp : Format.formatter -> t -> unit
