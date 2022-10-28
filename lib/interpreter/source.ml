@@ -36,11 +36,14 @@ module Source = struct
     in
     let rear =
       rear
-      ^ "\n"
-      ^ (Core.List.drop source.source (source.cursor.row + 1)
+      ^
+      let str =
+        Core.List.drop source.source (source.cursor.row + 1)
         |> List.map List.to_seq
         |> List.map String.of_seq
-        |> String.concat "\n")
+        |> String.concat "\n"
+      in
+      if String.length str = 0 then "" else "\n" ^ str
     in
     front, rear
 
@@ -97,12 +100,14 @@ module Source = struct
       cursor = { row; col = col + List.length str };
     }
 
-  let pp (formatter : Format.formatter) (source : t) : unit =
+  let pp ?(with_cursor : bool = true) (formatter : Format.formatter) (source : t) : unit =
     let front, back = split source in
-    let current_char = String.get back 0 in
-    let back = String.sub back 1 (String.length back - 1) in
+    let current_char = if String.length back > 0 then String.get back 0 else ' ' in
+    let back = if String.length back > 0 then String.sub back 1 (String.length back - 1) else "" in
     Format.fprintf formatter "%s" front;
-    if current_char = '\n' then Format.fprintf formatter "\027[30;47m \027[m\n"
-    else Format.fprintf formatter "\027[30;47m%c\027[m" current_char;
+    if with_cursor then
+      if current_char = '\n' then Format.fprintf formatter "\027[30;47m \027[m\n"
+      else Format.fprintf formatter "\027[30;47m%c\027[m" current_char
+    else Format.fprintf formatter "%c" current_char;
     Format.fprintf formatter "%s" back
 end

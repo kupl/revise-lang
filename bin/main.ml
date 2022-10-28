@@ -33,7 +33,7 @@ let main () =
         pgm)
     else Interpreter.interprete pgm target
   in
-  Source.pp Format.std_formatter processed;
+  Source.pp ~with_cursor:false Format.std_formatter processed;
   Format.fprintf Format.std_formatter "\n"
 
 let () = main ()
