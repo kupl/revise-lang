@@ -3,7 +3,7 @@
     exception LexingError
 }
 
-let whitespace = [' ' '\t']
+let whitespace = [' ' '\t' '\n']
 let backspace = ['b' 'B']['a' 'A']['c' 'C']['k' 'K']['s' 'S']['p' 'P']['a' 'A']['c' 'C']['e' 'E']
 let insert = ['i' 'I']['n' 'N']['s' 'S']['e' 'E']['r' 'R']['t' 'T']
 let down = ['v' 'V']
