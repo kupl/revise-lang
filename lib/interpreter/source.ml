@@ -17,6 +17,7 @@ module Source = struct
     let source = List.map (fun line -> String.to_seq line |> List.of_seq) source in
     { source; cursor }
 
+  let get_number_of_lines (source : t) : int = source.source |> List.length
   let get_current_row (source : t) : char list = List.nth source.source source.cursor.row
 
   let split ?(with_display : bool = false) (source : t) : string * string =
