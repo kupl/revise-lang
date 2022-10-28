@@ -10,7 +10,7 @@ module PredefinedString = struct
 
   let get_string_value (str : t) : string =
     match str with
-    | UndefinedSemantics -> "UndefinedSemantics"
+    | UndefinedSemantics -> "raise UndefinedSemantics"
     | Semicolon -> ";"
 
   let pp (formatter : Format.formatter) (str : t) : unit =

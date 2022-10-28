@@ -19,7 +19,7 @@ rule read =
         | ")" { RPAREN }
         | backspace { BACKSPACE }
         | insert { INSERT }
-        | "UndefinedSemantics" { UNDEFINEDSEMANTICS }
+        | "raise UndefinedSemantics" { UNDEFINEDSEMANTICS }
         | ";" { SEMICOLON }
         | eof { EOF }
         | _ { raise LexingError }
