@@ -16,5 +16,5 @@ module Source : sig
   val move_right : t -> t
   val delete : t -> t
   val insert : string -> t -> t
-  val pp : ?with_cursor:bool -> Format.formatter -> t -> unit
+  val pp : ?with_display:bool -> ?with_cursor:bool -> Format.formatter -> t -> unit
 end

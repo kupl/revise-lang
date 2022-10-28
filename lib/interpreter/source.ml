@@ -19,9 +19,17 @@ module Source = struct
 
   let get_current_row (source : t) : char list = List.nth source.source source.cursor.row
 
-  let split (source : t) : string * string =
+  let split ?(with_display : bool = false) (source : t) : string * string =
+    let lines = source.source in
+    let lines =
+      if with_display then [[]; []; []; []; []] @ lines @ [[]; []; []; []; []] else lines
+    in
+    let loc = source.cursor in
+    let loc = if with_display then { loc with row = loc.row + 5 } else loc in
     let front =
-      Core.List.take source.source source.cursor.row
+      Core.List.take lines loc.row
+      |> (if with_display then fun l -> l |> List.rev |> (fun l -> Core.List.take l 5) |> List.rev
+         else fun l -> l)
       |> List.map List.to_seq
       |> List.map String.of_seq
       |> String.concat "\n"
@@ -29,16 +37,15 @@ module Source = struct
     let front =
       front
       ^ (if String.length front > 0 then "\n" else "")
-      ^ (Core.List.take (get_current_row source) source.cursor.col |> List.to_seq |> String.of_seq)
+      ^ (Core.List.take (get_current_row source) loc.col |> List.to_seq |> String.of_seq)
     in
-    let rear =
-      Core.List.drop (get_current_row source) source.cursor.col |> List.to_seq |> String.of_seq
-    in
+    let rear = Core.List.drop (get_current_row source) loc.col |> List.to_seq |> String.of_seq in
     let rear =
       rear
       ^
       let str =
-        Core.List.drop source.source (source.cursor.row + 1)
+        Core.List.drop lines (loc.row + 1)
+        |> (if with_display then fun l -> Core.List.take l 5 else fun l -> l)
         |> List.map List.to_seq
         |> List.map String.of_seq
         |> String.concat "\n"
@@ -100,8 +107,14 @@ module Source = struct
       cursor = { row; col = col + List.length str };
     }
 
-  let pp ?(with_cursor : bool = true) (formatter : Format.formatter) (source : t) : unit =
-    let front, back = split source in
+  let pp
+      ?(with_display : bool = false)
+      ?(with_cursor : bool = true)
+      (formatter : Format.formatter)
+      (source : t)
+      : unit
+    =
+    let front, back = split ~with_display source in
     let current_char = if String.length back > 0 then String.get back 0 else ' ' in
     let back = if String.length back > 0 then String.sub back 1 (String.length back - 1) else "" in
     Format.fprintf formatter "%s" front;

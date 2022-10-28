@@ -25,7 +25,7 @@ let main () =
       Format.fprintf Format.std_formatter "\0277";
       List.fold_left
         (fun src cmd ->
-          Source.pp Format.std_formatter src;
+          Source.pp ~with_display:true Format.std_formatter src;
           Format.fprintf Format.std_formatter "\n";
           Format.pp_print_flush Format.std_formatter ();
           Unix.sleepf 0.1;
