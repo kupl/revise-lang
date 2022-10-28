@@ -44,7 +44,8 @@ module Source = struct
     in
     front, rear
 
-  let trim_row_loc (source : t) (row : int) : int = row |> max 0 |> min (List.length source.source)
+  let trim_row_loc (source : t) (row : int) : int =
+    row |> max 0 |> min (List.length source.source - 1)
 
   let trim_col_loc (source : t) (col : int) : int =
     col |> max 0 |> min (List.length (get_current_row source))
