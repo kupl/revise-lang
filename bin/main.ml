@@ -7,8 +7,8 @@ let main () =
   let opt_verbose = ref false in
   let options =
     [
-      "-target", Arg.String (fun x -> target := x), "target to rescue";
-      "-verbose", Arg.Set opt_verbose, "show edit step by step";
+      "-target", Arg.String (fun x -> target := x), "Target to rescue";
+      "-verbose", Arg.Set opt_verbose, "Show edit step by step";
     ]
   in
   let usage = "Usage: rescue -target <target.ml> RESCUE" in
