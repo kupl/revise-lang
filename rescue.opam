@@ -4,6 +4,7 @@ homepage: "https://github.com/kupl/rescue-lang"
 bug-reports: "https://github.com/kupl/rescue-lang/issues"
 depends: [
   "dune" {>= "3.5"}
+  "core"
   "odoc" {with-doc}
 ]
 build: [

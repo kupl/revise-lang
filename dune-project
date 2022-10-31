@@ -8,3 +8,7 @@
  (github kupl/rescue-lang))
 
 (using menhir 2.1)
+
+(package
+ (name rescue)
+ (depends core))
