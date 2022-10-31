@@ -6,6 +6,7 @@
 %token LPAREN
 %token RPAREN
 
+%token ORIGIN
 %token BACKSPACE
 %token INSERT
 
@@ -30,6 +31,7 @@ command:
   | DOWN { Ast.Lang.Command.down () }
   | LEFT { Ast.Lang.Command.left () }
   | RIGHT { Ast.Lang.Command.right () }
+  | ORIGIN { Ast.Lang.Command.origin () }
   | BACKSPACE { Ast.Lang.Command.backspace () }
   | INSERT; LPAREN; str=string; RPAREN { Ast.Lang.Command.insert str }
 

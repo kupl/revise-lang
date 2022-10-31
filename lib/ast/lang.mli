@@ -19,6 +19,7 @@ module Command : sig
     | Left
     | Right
     (* Special *)
+    | Origin
     | Backspace
     | Insert of PredefinedString.t
 
@@ -26,6 +27,7 @@ module Command : sig
   val down : unit -> t
   val left : unit -> t
   val right : unit -> t
+  val origin : unit -> t
   val backspace : unit -> t
   val insert : PredefinedString.t -> t
   val pp : Format.formatter -> t -> unit

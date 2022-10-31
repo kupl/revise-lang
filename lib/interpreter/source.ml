@@ -76,6 +76,8 @@ module Source = struct
   let move_right (source : t) : t =
     { source with cursor = { source.cursor with col = source.cursor.col + 1 } |> trim_loc source }
 
+  let move_to_origin (source : t) : t = { source with cursor = { row = 0; col = 0 } }
+
   let delete (source : t) : t =
     match source.cursor with
     | { row = 0; col = 0 } -> source

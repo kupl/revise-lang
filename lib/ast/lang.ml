@@ -25,6 +25,7 @@ module Command = struct
     | Left
     | Right
     (* Special *)
+    | Origin
     | Backspace
     | Insert of PredefinedString.t
 
@@ -35,6 +36,7 @@ module Command = struct
   let right () : t = Right
 
   (* Special *)
+  let origin () : t = Origin
   let backspace () : t = Backspace
   let insert (str : PredefinedString.t) : t = Insert str
 
@@ -44,6 +46,7 @@ module Command = struct
     | Down -> Format.fprintf formatter "v"
     | Left -> Format.fprintf formatter "<"
     | Right -> Format.fprintf formatter ">"
+    | Origin -> Format.fprintf formatter "origin"
     | Backspace -> Format.fprintf formatter "backspace"
     | Insert str ->
         Format.fprintf formatter "insert(";
