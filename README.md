@@ -10,12 +10,14 @@ Rescue는 작은 수정을 정의한 언어로 명령의 리스트로 이루어�
 ```
 P = C*
 C = ^ | v | < | >
+  | origin
   | backspace
   | insert(S)
 S = raise UndefinedSemantics
   | ;
 ```
 * `^`, `v`, `<`, `>`: 각각 커서를 상하좌우로 이동
+* `origin`: 소스 코드 상의 맨 위 맨 왼쪽 지점으로 이동
 * `backspace`: 커서 위치에서 한글자 지우기
 * `insert(S)`: 커서 위치에서 `S` 삽입
 
