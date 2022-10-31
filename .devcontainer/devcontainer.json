@@ -1,6 +1,6 @@
 {
     "name": "rescue-lang",
-    "image": "sambyeol/ocaml-devcontainer",
+    "dockerFile": "Dockerfile",
     "customizations": {
         "vscode": {
             "settings": {
