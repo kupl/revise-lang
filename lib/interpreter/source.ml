@@ -20,41 +20,6 @@ module Source = struct
   let get_number_of_lines (source : t) : int = source.source |> List.length
   let get_current_row (source : t) : char list = List.nth source.source source.cursor.row
 
-  let split ?(with_display : bool = false) (source : t) : string * string =
-    let lines = source.source in
-    let lines =
-      if with_display then [[]; []; []; []; []] @ lines @ [[]; []; []; []; []] else lines
-    in
-    let loc = source.cursor in
-    let loc = if with_display then { loc with row = loc.row + 5 } else loc in
-    let front =
-      Core.List.take lines loc.row
-      |> (if with_display then fun l -> l |> List.rev |> (fun l -> Core.List.take l 5) |> List.rev
-         else fun l -> l)
-      |> List.map List.to_seq
-      |> List.map String.of_seq
-      |> String.concat "\n"
-    in
-    let front =
-      front
-      ^ (if String.length front > 0 then "\n" else "")
-      ^ (Core.List.take (get_current_row source) loc.col |> List.to_seq |> String.of_seq)
-    in
-    let rear = Core.List.drop (get_current_row source) loc.col |> List.to_seq |> String.of_seq in
-    let rear =
-      rear
-      ^
-      let str =
-        Core.List.drop lines (loc.row + 1)
-        |> (if with_display then fun l -> Core.List.take l 5 else fun l -> l)
-        |> List.map List.to_seq
-        |> List.map String.of_seq
-        |> String.concat "\n"
-      in
-      if String.length str = 0 then "" else "\n" ^ str
-    in
-    front, rear
-
   let trim_row_loc (source : t) (row : int) : int =
     row |> max 0 |> min (List.length source.source - 1)
 
@@ -65,21 +30,49 @@ module Source = struct
     { row = trim_row_loc source loc.row; col = trim_col_loc source loc.col }
 
   let move_up (source : t) : t =
-    { source with cursor = { source.cursor with row = source.cursor.row - 1 } |> trim_loc source }
+    match source.cursor.row with
+    | 0 -> { source with cursor = { row = 0; col = 0 } }
+    | row -> { source with cursor = { source.cursor with row = row - 1 |> trim_row_loc source } }
 
   let move_down (source : t) : t =
-    { source with cursor = { source.cursor with row = source.cursor.row + 1 } |> trim_loc source }
+    if source.cursor.row < List.length source.source - 1 then
+      {
+        source with
+        cursor = { source.cursor with row = source.cursor.row + 1 |> trim_row_loc source };
+      }
+    else
+      {
+        source with
+        cursor =
+          { source.cursor with col = get_current_row source |> List.length |> trim_col_loc source };
+      }
 
   let move_left (source : t) : t =
-    { source with cursor = { source.cursor with col = source.cursor.col - 1 } |> trim_loc source }
+    let col = source.cursor.col |> trim_col_loc source in
+    match col with
+    | 0 -> (
+        match source.cursor.row with
+        | 0 -> source
+        | row ->
+            {
+              source with
+              cursor = { row = row - 1; col = List.nth source.source (row - 1) |> List.length };
+            })
+    | col -> { source with cursor = { source.cursor with col = col - 1 |> trim_col_loc source } }
 
   let move_right (source : t) : t =
-    { source with cursor = { source.cursor with col = source.cursor.col + 1 } |> trim_loc source }
+    let col = source.cursor.col |> trim_col_loc source in
+    let col = col + 1 in
+    if col > List.length (get_current_row source) then
+      let row = source.cursor.row + 1 |> trim_row_loc source in
+      { source with cursor = { row; col = 0 } }
+    else { source with cursor = { source.cursor with col = col |> trim_col_loc source } }
 
   let move_to_origin (source : t) : t = { source with cursor = { row = 0; col = 0 } }
 
   let delete (source : t) : t =
-    match source.cursor with
+    let cursor = trim_loc source source.cursor in
+    match cursor with
     | { row = 0; col = 0 } -> source
     | { row; col = 0 } ->
         let front_rows = Core.List.take source.source (row - 1) in
@@ -109,6 +102,41 @@ module Source = struct
       source = front_rows @ [current_row] @ rear_rows;
       cursor = { row; col = col + List.length str };
     }
+
+  let split ?(with_display : bool = false) (source : t) : string * string =
+    let lines = source.source in
+    let lines =
+      if with_display then [[]; []; []; []; []] @ lines @ [[]; []; []; []; []] else lines
+    in
+    let loc = source.cursor |> trim_loc source in
+    let loc = if with_display then { loc with row = loc.row + 5 } else loc in
+    let front =
+      Core.List.take lines loc.row
+      |> (if with_display then fun l -> l |> List.rev |> (fun l -> Core.List.take l 5) |> List.rev
+         else fun l -> l)
+      |> List.map List.to_seq
+      |> List.map String.of_seq
+      |> String.concat "\n"
+    in
+    let front =
+      front
+      ^ (if String.length front > 0 then "\n" else "")
+      ^ (Core.List.take (get_current_row source) loc.col |> List.to_seq |> String.of_seq)
+    in
+    let rear = Core.List.drop (get_current_row source) loc.col |> List.to_seq |> String.of_seq in
+    let rear =
+      rear
+      ^
+      let str =
+        Core.List.drop lines (loc.row + 1)
+        |> (if with_display then fun l -> Core.List.take l 5 else fun l -> l)
+        |> List.map List.to_seq
+        |> List.map String.of_seq
+        |> String.concat "\n"
+      in
+      if String.length str = 0 then "" else "\n" ^ str
+    in
+    front, rear
 
   let pp
       ?(with_display : bool = false)
