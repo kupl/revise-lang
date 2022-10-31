@@ -36,5 +36,5 @@ command:
   | INSERT; LPAREN; str=string; RPAREN { Ast.Lang.Command.insert str }
 
 string:
-  UNDEFINEDSEMANTICS { Ast.Lang.PredefinedString.undefinedSemantics () }
+  | UNDEFINEDSEMANTICS { Ast.Lang.PredefinedString.undefinedSemantics () }
   | SEMICOLON { Ast.Lang.PredefinedString.semicolon () }
