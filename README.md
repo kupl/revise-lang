@@ -28,7 +28,7 @@ Rescue 언어는 수정 대상의 맨 처음음 위치(가장 윗줄의 가장 �
 아래의 프로그램들을 설치합니다.
 * Docker [[link]](https://docs.docker.com/desktop/)
 * VSCode [[link]](https://code.visualstudio.com/download)
-* remote container [[link]](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+* Dev Containers [[link]](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
 저장소를 다운 받아 VSCode로 폴더를 엽니다.
 ```sh
