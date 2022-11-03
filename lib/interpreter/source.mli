@@ -10,7 +10,6 @@ module Source : sig
   }
 
   val from_string : string -> t
-  val get_number_of_lines : t -> int
   val move_up : t -> t
   val move_down : t -> t
   val move_left : t -> t
