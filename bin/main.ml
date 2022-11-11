@@ -1,5 +1,7 @@
-module Program = Ast.Lang.Program
-module Source = Interpreter.Source
+module Source = Rescue.Source
+module Program = Example.Lang.Program
+module Parser = Example.Parser
+module Interpreter = Example.Lang.Interpreter
 
 let main () =
   (* Args *)

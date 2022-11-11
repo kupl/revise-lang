@@ -21,7 +21,8 @@ rule read =
         | origin { ORIGIN }
         | backspace { BACKSPACE }
         | insert { INSERT }
-        | "raise UndefinedSemantics" { UNDEFINEDSEMANTICS }
-        | ";" { SEMICOLON }
+        | "raise UndefinedSemantics" { PREDEFINED "raise UndefinedSemantics" }
+        | ";" { PREDEFINED ";" }
+        | "_" { PREDEFINED "_" }
         | eof { EOF }
         | _ { raise LexingError }

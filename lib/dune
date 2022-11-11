@@ -1,2 +1,4 @@
 (library
- (name rescue))
+ (name rescue)
+ (public_name rescue)
+ (libraries core))
