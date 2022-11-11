@@ -13,13 +13,18 @@ C = ^ | v | < | >
   | origin
   | backspace
   | insert(S)
-S = raise UndefinedSemantics
-  | ;
 ```
 * `^`, `v`, `<`, `>`: 각각 커서를 상하좌우로 이동
 * `origin`: 소스 코드 상의 맨 위 맨 왼쪽 지점으로 이동
 * `backspace`: 커서 위치에서 한글자 지우기
 * `insert(S)`: 커서 위치에서 `S` 삽입
+
+`S`는 사전에 정의된 문자열의 집합의 원소입니다.
+`example`에 정의되어 있는 언어에서는 아래 두가지 중 하나의 값을 가질 수 있습니다.
+```
+S = UndefinedSemantics
+  | ;
+```
 
 Rescue 언어는 수정 대상의 맨 처음음 위치(가장 윗줄의 가장 처음 위치)에서 시작하여 동작합니다.
 
