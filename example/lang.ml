@@ -21,7 +21,6 @@ module PredefinedString = struct
 end
 
 module Lang = Rescue.Lang.Make (PredefinedString)
-module PredefinedString = Lang.PredefinedString
 module Command = Lang.Command
 module Program = Lang.Program
 module Interpreter = Rescue.Interpreter.Make (Lang)
