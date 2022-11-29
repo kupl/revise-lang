@@ -9,7 +9,7 @@ module PredefinedString = struct
     match str with
     | "raise UndefinedSemantics" -> UndefinedSemantics
     | ";" -> Semicolon
-    | _ -> raise (Rescue.Lang.NotINPredefinedStringSet str)
+    | _ -> raise (Rescue.Lang.NotInPredefinedStringSet str)
 
   let get_string_value (value : t) : string =
     match value with

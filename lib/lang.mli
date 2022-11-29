@@ -1,4 +1,4 @@
-exception NotINPredefinedStringSet of string
+exception NotInPredefinedStringSet of string
 
 module type PredefinedString = sig
   type t
