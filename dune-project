@@ -14,5 +14,5 @@
 
 (package
  (name rescue)
- (synopsis "a language define minor revision")
+ (synopsis "A language define minor revision")
  (depends core))
