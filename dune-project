@@ -2,6 +2,9 @@
 
 (name rescue)
 
+(maintainers "Seokhyun Lee <seokhyunlee@korea.ac.kr>")
+(authors "Seokhyun Lee <seokhyunlee@korea.ac.kr>")
+
 (generate_opam_files true)
 
 (source
@@ -11,4 +14,5 @@
 
 (package
  (name rescue)
+ (synopsis "a language define minor revision")
  (depends core))
