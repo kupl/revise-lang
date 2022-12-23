@@ -1,4 +1,0 @@
-(executable
- (public_name rescue)
- (name main)
- (libraries rescue rescue.util rescue.example))

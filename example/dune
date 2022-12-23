@@ -1,9 +1,0 @@
-(ocamllex lexer)
-
-(menhir
- (modules generator))
-
-(library
- (name example)
- (public_name rescue.example)
- (libraries rescue))
