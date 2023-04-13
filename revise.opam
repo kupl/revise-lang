@@ -3,8 +3,8 @@ opam-version: "2.0"
 synopsis: "A language define minor revision"
 maintainer: ["Seokhyun Lee <seokhyunlee@korea.ac.kr>"]
 authors: ["Seokhyun Lee <seokhyunlee@korea.ac.kr>"]
-homepage: "https://github.com/kupl/rescue-lang"
-bug-reports: "https://github.com/kupl/rescue-lang/issues"
+homepage: "https://github.com/kupl/revise-lang"
+bug-reports: "https://github.com/kupl/revise-lang/issues"
 depends: [
   "dune" {>= "3.5"}
   "core"
@@ -24,4 +24,4 @@ build: [
     "@doc" {with-doc}
   ]
 ]
-dev-repo: "git+https://github.com/kupl/rescue-lang.git"
+dev-repo: "git+https://github.com/kupl/revise-lang.git"
